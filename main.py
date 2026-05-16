@@ -1,0 +1,29 @@
+import telebot
+from  transliterate import to_cyrillic, to_latin
+import transliterate
+
+TOKEN="8689290533:AAGfaXxi3UBaVgmI6WgTW0rt4z6XFadNDsk"
+bot = telebot.TeleBot(TOKEN, parse_mode=None)
+
+@bot.message_handler(commands=['start', 'help'])
+def send_welcome(message):
+	bot.reply_to(message, "Assalomu alekum, botimizga xush kelibsiz!")
+	
+@bot.message_handler(func=lambda m: True)
+def echo_all(message):
+
+	text = message.text
+	if text.isascii():
+		bot.reply_to(message, to_cyrillic(text))
+	else:
+		bot.reply_to(message, to_latin(text))
+	
+bot.infinity_polling()
+
+
+
+# s = input()
+# if s.isascii():
+#     print(to_cyrillic(s))
+# else:
+#     print(to_latin(s))
